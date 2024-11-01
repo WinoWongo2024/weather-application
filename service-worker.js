@@ -1,11 +1,12 @@
-const CACHE_NAME = "weather-app-cache-v0.0.2";
+const CACHE_NAME = "weather-app-cache-v0.0.3";
 const ASSETS = [
     "/",
     "/index.html",
     "/style.css",
     "/app.js",
     "/manifest.json",
-    "/images/icon-192x192.png", // Add paths to any icons or images used
+    "/IMG_2142.jpeg", // Ensure the map image path is correct
+    "/images/icon-192x192.png", // Ensure these paths are correct
     "/images/icon-512x512.png"
 ];
 
@@ -15,6 +16,8 @@ self.addEventListener("install", (event) => {
         caches.open(CACHE_NAME).then((cache) => {
             console.log("Caching app assets");
             return cache.addAll(ASSETS);
+        }).catch((error) => {
+            console.error("Failed to cache assets during installation:", error);
         })
     );
     self.skipWaiting();
@@ -32,6 +35,8 @@ self.addEventListener("activate", (event) => {
                     }
                 })
             );
+        }).catch((error) => {
+            console.error("Failed to clear old caches during activation:", error);
         })
     );
     self.clients.claim();
@@ -41,16 +46,24 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
+            // Serve the cached response if available
             if (cachedResponse) {
-                return cachedResponse; // Serve from cache
+                return cachedResponse;
             }
+
+            // Fetch from network and update cache with new content
             return fetch(event.request).then((networkResponse) => {
-                // Cache the new response
+                if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+                    return networkResponse;
+                }
+
                 return caches.open(CACHE_NAME).then((cache) => {
                     cache.put(event.request, networkResponse.clone());
                     return networkResponse;
                 });
             });
+        }).catch((error) => {
+            console.error("Fetch failed:", error);
         })
     );
 });
