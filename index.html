@@ -3,95 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realistic Weather App</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="manifest" href="./manifest.json">
+    <title>Interactive Weather App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Weather App</h1>
-        <div id="overall-weather">
-            <h2>Overall Weather</h2>
-            <p id="overall-condition">Partly Cloudy</p>
-            <p id="overall-temp">15°C</p>
-            <p id="overall-humidity">Humidity: 60%</p>
-            <p id="overall-wind">Wind: 12 km/h</p>
-        </div>
-        <input type="text" placeholder="Search for an area..." id="search">
-        <button onclick="fetchWeather()">Search</button>
-    </header>
-    
-    <main>
-        <section id="weather-locations">
-            <h2>Weather by Area</h2>
-            <div id="location-container">
-                <!-- St Albans -->
-                <div class="location-card">
-                    <h3>St Albans</h3>
-                    <p class="zone-info">Non-TfL ULEZ Zone</p>
-                    <p class="weather-condition">Sunny</p>
-                    <p class="temp">18°C</p>
-                    <p class="humidity">Humidity: 45%</p>
-                    <p class="wind">Wind: 8 km/h</p>
-                </div>
-                
-                <!-- Westminster -->
-                <div class="location-card">
-                    <h3>Westminster</h3>
-                    <p class="weather-condition">Cloudy</p>
-                    <p class="temp">14°C</p>
-                    <p class="humidity">Humidity: 55%</p>
-                    <p class="wind">Wind: 10 km/h</p>
-                </div>
-                
-                <!-- Chelsea -->
-                <div class="location-card">
-                    <h3>Chelsea</h3>
-                    <p class="weather-condition">Partly Cloudy</p>
-                    <p class="temp">16°C</p>
-                    <p class="humidity">Humidity: 50%</p>
-                    <p class="wind">Wind: 12 km/h</p>
-                </div>
-
-                <!-- Canning Town -->
-                <div class="location-card">
-                    <h3>Canning Town</h3>
-                    <p class="weather-condition">Rainy</p>
-                    <p class="temp">13°C</p>
-                    <p class="humidity">Humidity: 75%</p>
-                    <p class="wind">Wind: 15 km/h</p>
-                </div>
-
-                <!-- Isle of Dogs -->
-                <div class="location-card">
-                    <h3>Isle of Dogs</h3>
-                    <p class="weather-condition">Overcast</p>
-                    <p class="temp">15°C</p>
-                    <p class="humidity">Humidity: 70%</p>
-                    <p class="wind">Wind: 11 km/h</p>
-                </div>
-
-                <!-- Heathrow Airport -->
-                <div class="location-card">
-                    <h3>Heathrow Airport</h3>
-                    <p class="weather-condition">Foggy</p>
-                    <p class="temp">12°C</p>
-                    <p class="humidity">Humidity: 85%</p>
-                    <p class="wind">Wind: 5 km/h</p>
-                </div>
-
-                <!-- Royal Docks -->
-                <div class="location-card">
-                    <h3>Royal Docks</h3>
-                    <p class="weather-condition">Showers</p>
-                    <p class="temp">13°C</p>
-                    <p class="humidity">Humidity: 80%</p>
-                    <p class="wind">Wind: 18 km/h</p>
-                </div>
+    <div class="container">
+        <header>
+            <h1>Weather App</h1>
+            <div id="overall-weather">
+                <h2>Overall Weather</h2>
+                <p id="overall-condition">Partly Cloudy</p>
+                <p id="overall-temp">15°C</p>
+                <p id="overall-humidity">Humidity: 60%</p>
+                <p id="overall-wind">Wind: 12 km/h</p>
             </div>
-        </section>
-    </main>
+        </header>
 
-    <script src="./app.js"></script>
+        <!-- Interactive Map Section -->
+        <section id="map-section">
+            <h2>Click on an area to view weather</h2>
+            <img src="IMG_2142.jpeg" usemap="#image-map" class="interactive-map" alt="Weather Map">
+
+            <map name="image-map">
+                <area alt="Chelsea" title="Chelsea" href="#" coords="520,616,551,575,627,667,805,646,795,494,744,494,759,387,652,336,581,402,556,346,372,438,382,499,403,555" shape="poly" onclick="showWeather('Chelsea')">
+                <area alt="Canary Wharf" title="Canary Wharf" href="#" coords="724,346,800,336,1101,412,1045,565,984,539,923,621,810,631,754,488" shape="poly" onclick="showWeather('Canary Wharf')">
+                <area alt="Ruislip" title="Ruislip" href="#" coords="426,568,559,583,645,654,757,649,757,822,564,914,482,746" shape="poly" onclick="showWeather('Ruislip')">
+                <area alt="Westminster" title="Westminster" href="#" coords="968,534,1075,575,1116,677,1086,763,953,763,765,763,759,636,912,621" shape="poly" onclick="showWeather('Westminster')">
+                <area alt="Canning Town" title="Canning Town" href="#" coords="759,768,948,768,973,865,953,982,861,977,846,916,754,840" shape="poly" onclick="showWeather('Canning Town')">
+                <area alt="Heathrow" title="Heathrow" href="#" coords="752,829,844,921,844,972,763,982,722,1068,712,1277,436,1185,508,951" shape="poly" onclick="showWeather('Heathrow')">
+                <area alt="Royal Docks" title="Royal Docks" href="#" coords="775,977,729,1069,708,1242,1096,1211,1111,1069,923,972" shape="poly" onclick="showWeather('Royal Docks')">
+                <area alt="Isle of Dogs" title="Isle of Dogs" href="#" coords="1137,1084,948,987,979,860,938,763,1086,763,1402,539,1391,962" shape="poly" onclick="showWeather('Isle of Dogs')">
+            </map>
+        </section>
+
+        <!-- Weather Display Section -->
+        <main>
+            <section id="weather-details">
+                <h2 id="location-name">Select a location</h2>
+                <p class="weather-condition" id="location-condition"></p>
+                <p class="temp" id="location-temp"></p>
+                <p class="humidity" id="location-humidity"></p>
+                <p class="wind" id="location-wind"></p>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>
